@@ -1,0 +1,14 @@
+{
+  "applicationTitle": "Test AngularJS Application",
+  "apiUrl": "http://localhost:3000/",
+  "menu": [
+    {
+      "title": "Books",
+      "link": "/books"
+    },
+    {
+      "title": "Authors",
+      "link": "/authors"
+    }
+  ]
+}
