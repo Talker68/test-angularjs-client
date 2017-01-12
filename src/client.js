@@ -7,8 +7,16 @@ import config from "./config.json";
 
 let app = angular.module('app', ["ngRoute", "angularModalService"]);
 
-// import bootstrap from "./bootstrap";
-// bootstrap(app);
+import bootstrap from "./system/bootstrap";
+bootstrap(app);
+
+import system from "./system";
+system(app);
+
+import items from "./vendor/items";
+items(app);
+
+
 //
 // import common from "./_common";
 // common(app);
