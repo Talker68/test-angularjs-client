@@ -1,4 +1,5 @@
 import template from './template.html';
+import './styles.less';
 
 export class ListingComponentController {
 
@@ -9,8 +10,10 @@ export class ListingComponentController {
         name = name[0].toUpperCase() + name.slice(1);
         this.service = this.$injector.get(`${name}Service`);
 
+        this.title = name;
         this.data = [];
         this.errorMessage = '';
+        this.current = 0;
 
         this.loadData();
 
@@ -20,6 +23,7 @@ export class ListingComponentController {
         this.loading = true;
         this.service.findAll().then(data => {
             this.data = data;
+            this.current = this.data[0].id;
             this.loading = false;
         }, error => {
             this.errorMessage = error;
@@ -28,6 +32,10 @@ export class ListingComponentController {
             this.errorMessage = error;
             this.loading = false;
         });
+    }
+
+    setCurrent(item){
+        this.current = item.id;
     }
 
 }

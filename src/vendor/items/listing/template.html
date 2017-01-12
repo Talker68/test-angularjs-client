@@ -1,7 +1,16 @@
 <div class="container">
     <div class="row">
+        <div class="col-sm-12">
+            <ol class="breadcrumb">
+                <li class="active">{{$ctrl.title}} listing</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-3">
-            listing
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="item in $ctrl.data" ng-class="{'active': item.id === $ctrl.current}" ng-click="$ctrl.setCurrent(item)">{{item.name}}</li>
+            </ul>
         </div>
         <div class="col-sm-9">
             data coming soon

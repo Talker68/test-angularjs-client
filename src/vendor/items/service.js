@@ -2,12 +2,16 @@ export class Service {
 
     constructor($injector){
         this.$injector = $injector;
+        this.$q = this.$injector.get('$q');
     }
 
     findAll(){
-        return new Promise((resolve, reject)=>{
-            resolve([1, 2, 3]);
-        });
+        let d = new this.$q.defer();
+        d.resolve([
+            {id: 1, name: "the first"},
+            {id: 2, name: "the second"}
+        ]);
+        return d.promise;
     }
 
 }

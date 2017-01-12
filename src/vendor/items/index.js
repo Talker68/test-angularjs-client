@@ -13,9 +13,7 @@ export default function (app){
 
 
     app.config(($routeProvider)=>{
-        $routeProvider.when("/", {
-            template: `<${ModuleName}-listing></${ModuleName}-listing>`
-        }).when(`/${ModuleName}`, {
+        $routeProvider.when(`/${ModuleName}`, {
             template: `<${ModuleName}-listing></${ModuleName}-listing>`
         }).when(`/${ModuleName}/:id`, {
             template: params => `<${ModuleName}-item id="${params.id}"></${ModuleName}-item>`

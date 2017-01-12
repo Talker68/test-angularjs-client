@@ -1,8 +1,10 @@
+import config from "../config.json";
+
 class Config {
 
     constructor($routeProvider, $httpProvider, $locationProvider){
 
-        $routeProvider.otherwise("/");
+        $routeProvider.otherwise(`${config.defaultMenuItem}`);
         $locationProvider.html5Mode(true);
         //$httpProvider.interceptors.push('Interceptor');
 

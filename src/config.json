@@ -3,12 +3,13 @@
   "apiUrl": "http://localhost:3000/",
   "menu": [
     {
-      "title": "Module1",
-      "link": "/module1"
+      "title": "Items",
+      "link": "items"
     },
     {
-      "title": "Module2",
-      "link": "/module2"
+      "title": "Books",
+      "link": "books"
     }
-  ]
+  ],
+  "defaultMenuItem": "items"
 }
