@@ -1,18 +1,38 @@
+let data = [
+    {id: 1, name: "the first"},
+    {id: 2, name: "the second"}
+];
+
 class ServiceParent {
 
-    emulateOfRequest(){
+    emulateOfFindAll(){
         let d = new this.$q.defer();
-        d.resolve([
-            {id: 1, name: "the first"},
-            {id: 2, name: "the second"}
-        ]);
+        d.resolve(data);
+        return d.promise;
+    }
+
+    emulateOfRemove(id){
+        let d = new this.$q.defer();
+        data = data.filter(item => item.id!=id);
+        d.resolve(data);
         return d.promise;
     }
 
     async findAll(){
         try{
-            let data = await this.emulateOfRequest();
+            let data = await this.emulateOfFindAll();
             return data;
+        }catch(e){
+            return {
+                message: e.data.message
+            }
+        }
+    }
+
+    async remove(id){
+        try{
+            let result = this.emulateOfRemove(id);
+            return result;
         }catch(e){
             return {
                 message: e.data.message

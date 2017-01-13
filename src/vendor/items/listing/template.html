@@ -9,7 +9,10 @@
     <div class="row">
         <div class="col-sm-3">
             <ul class="list-group">
-                <li class="list-group-item" ng-repeat="item in $ctrl.data" ng-class="{'active': item.id === $ctrl.current}" ng-click="$ctrl.setCurrent(item)">{{item.name}}</li>
+                <li class="list-group-item" ng-repeat="item in $ctrl.data" ng-class="{'active': item.id === $ctrl.current}" ng-click="$ctrl.setCurrent(item)">
+                    {{item.name}}
+                    <span class="glyphicon pull-right" ng-class="{'glyphicon-refresh spinning': item.loading, 'glyphicon-trash': !item.loading}" aria-hidden="true" ng-click="$ctrl.remove(item)"></span>
+                </li>
             </ul>
         </div>
         <div class="col-sm-9">
