@@ -3,8 +3,9 @@ import './styles.less';
 
 export class ListingComponentController {
 
-    constructor($injector, name){
+    constructor($scope, $injector, name){
 
+        this.$scope = $scope;
         this.$injector = $injector;
 
         name = name[0].toUpperCase() + name.slice(1);
@@ -19,19 +20,17 @@ export class ListingComponentController {
 
     }
 
-    loadData(){
+    async loadData(){
         this.loading = true;
-        this.service.findAll().then(data => {
-            this.data = data;
+        try{
+            this.data = await this.service.findAll();
             this.current = this.data[0].id;
             this.loading = false;
-        }, error => {
+        }catch(error){
             this.errorMessage = error;
             this.loading = false;
-        }).catch(error => {
-            this.errorMessage = error;
-            this.loading = false;
-        });
+        }
+        this.$scope.$digest();
     }
 
     setCurrent(item){
@@ -43,8 +42,8 @@ export class ListingComponentController {
 export function listingComponent (name) {
     return {
 
-        controller: ($injector) => {
-            return new ListingComponentController($injector, name)
+        controller: ($scope, $injector) => {
+            return new ListingComponentController($scope, $injector, name)
         },
 
         get template(){
