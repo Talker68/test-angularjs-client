@@ -1,22 +1,37 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
+            <app-icon name="plus" title="Name" classes="pull-right fullscreen-btn"></app-icon>
+            <app-icon-toggle model="$ctrl.fullscreen" class-true="resize-full" class-false="resize-small" classes="pull-right fullscreen-btn"></app-icon-toggle>
+            <!--<app-icon-sort name="Name" model="$ctrl.sort" class-null="" class-asc="" class-desc="" on-sorted="" classes="pull-right fullscreen-btn"></app-icon-sort>-->
+            <!--<button type="button" class="btn btn-xs btn-default pull-right fullscreen-btn" ng-click="$ctrl.fullscreen = !$ctrl.fullscreen" aria-label="Full Screen">-->
+                <!--<span class="glyphicon" ng-class="{'glyphicon-sort-by-attributes': !$ctrl.fullscreen, 'glyphicon-sort-by-attributes-alt': $ctrl.fullscreen}" aria-hidden="true"></span> Name-->
+            <!--</button>-->
             <ol class="breadcrumb">
-                <li class="active">{{$ctrl.title}} listing</li>
+                <li class="active"><h3>{{$ctrl.title}} listing</h3></li>
             </ol>
         </div>
     </div>
+    <div class="row"  ng-if="$ctrl.error">
+        <div class="col-xs-12">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Error!</strong> {{$ctrl.error}}
+            </div>
+        </div>
+    </div>
     <div class="row">
-        <div class="col-sm-3">
-            <ul class="list-group">
+        <div ng-class="{'col-sm-12': $ctrl.fullscreen, 'col-sm-3': !$ctrl.fullscreen}">
+            <app-loader ng-if="$ctrl.loading"></app-loader>
+            <ul class="list-group" ng-if="!$ctrl.loading">
                 <li class="list-group-item" ng-repeat="item in $ctrl.data" ng-class="{'active': item.id === $ctrl.current}" ng-click="$ctrl.setCurrent(item)">
                     {{item.name}}
                     <span class="glyphicon pull-right" ng-class="{'glyphicon-refresh spinning': item.loading, 'glyphicon-trash': !item.loading}" aria-hidden="true" ng-click="$ctrl.remove(item)"></span>
                 </li>
             </ul>
         </div>
-        <div class="col-sm-9">
-            data coming soon
+        <div ng-class="{'hidden': $ctrl.fullscreen, 'col-sm-9': !$ctrl.fullscreen}">
+            <items-item id="{{$ctrl.current}}"></items-item>
         </div>
     </div>
 </div>

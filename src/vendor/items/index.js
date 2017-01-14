@@ -1,6 +1,7 @@
 import {Service} from "./service";
 import {ServiceBuilder} from "../../system/service-builder"
 import {listingComponent} from "./listing";
+import {itemComponent} from "./item";
 
 const ModuleName = 'items';
 
@@ -9,6 +10,7 @@ export default function (app){
     ServiceBuilder.create(app, ModuleName, Service);
 
     app.component(`${ModuleName}Listing`, listingComponent(ModuleName));
+    app.component(`${ModuleName}Item`, itemComponent(ModuleName));
 
 
 

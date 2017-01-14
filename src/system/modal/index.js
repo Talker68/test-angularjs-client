@@ -1,5 +1,5 @@
 import template from './template.html';
-import config from '../../config.json';
+import {ModalPopup} from './popup-service';
 
 export class ModalController {
 
@@ -32,4 +32,5 @@ export function modalComponent () {
         }
 
     }
-}
+};
+export {ModalPopup};

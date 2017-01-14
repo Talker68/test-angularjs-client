@@ -1,6 +1,8 @@
 import {headerComponent} from './header';
 import {footerComponent} from './footer';
-import {modalComponent} from './modal';
+import {loaderComponent} from './loader';
+import {iconComponent, iconToggleComponent} from './icons';
+import {modalComponent, ModalPopup} from './modal';
 
 export default function (app){
 
@@ -8,6 +10,12 @@ export default function (app){
 
     app.component(`appFooter`, footerComponent());
 
+    app.component(`appLoader`, loaderComponent());
+
+    app.component(`appIcon`, iconComponent());
+    app.component(`appIconToggle`, iconToggleComponent());
+
     app.directive(`appModal`, () => modalComponent());
+    app.service(`ModalPopup`, ['ModalService',(ModalService) => new ModalPopup(ModalService)]);
 
 }

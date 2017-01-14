@@ -1,5 +1,5 @@
 import template from './template.html';
-import config from '../../config.json';
+import './styles.less';
 
 export class FooterComponentController {
 
