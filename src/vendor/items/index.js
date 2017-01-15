@@ -1,5 +1,6 @@
 import {Service} from "./service";
 import {ServiceBuilder} from "../../system/service-builder"
+import {dashboardComponent} from "./dashboard";
 import {listingComponent} from "./listing";
 import {itemComponent} from "./item";
 
@@ -9,6 +10,7 @@ export default function (app){
 
     ServiceBuilder.create(app, ModuleName, Service);
 
+    app.component(`${ModuleName}Dashboard`, dashboardComponent(ModuleName));
     app.component(`${ModuleName}Listing`, listingComponent(ModuleName));
     app.component(`${ModuleName}Item`, itemComponent(ModuleName));
 
@@ -16,7 +18,7 @@ export default function (app){
 
     app.config(($routeProvider)=>{
         $routeProvider.when(`/${ModuleName}`, {
-            template: `<${ModuleName}-listing></${ModuleName}-listing>`
+            template: `<${ModuleName}-dashboard></${ModuleName}-dashboard>`
         }).when(`/${ModuleName}/:id`, {
             template: params => `<${ModuleName}-item id="${params.id}" classes="container" back-url="/${ModuleName}"></${ModuleName}-item>`
         }).when(`/${ModuleName}/add`, {

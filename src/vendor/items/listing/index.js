@@ -11,7 +11,7 @@ export class ListingComponentController {
         this.loading = true;
         try {
             this.data = await this.service.findAll();
-            this.current = this.data[0].id;
+            this.current = this.current || this.data[0].id;
             this.restoreState();
         } catch (error) {
             this.error = error;
@@ -92,7 +92,6 @@ export class ListingComponentController {
         this.title = name;
         this.data = [];
         this.error = '';
-        this.current = 0;
 
         this.loadAll();
 
@@ -108,6 +107,10 @@ export class ListingComponentController {
 
 export function listingComponent(name) {
     return {
+
+        bindings: {
+            current: '=?'
+        },
 
         controller: ($scope, $injector) => {
             return new ListingComponentController($scope, $injector, name)

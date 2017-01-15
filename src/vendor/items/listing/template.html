@@ -1,37 +1,28 @@
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <ol class="breadcrumb">
-                <li class="active"><h3>{{$ctrl.title}}</h3></li>
-            </ol>
-        </div>
-    </div>
+<div class="container-fluid">
     <div class="row" ng-if="$ctrl.error">
         <div class="col-xs-12"><app-error>{{$ctrl.error}}</app-error></div>
     </div>
     <div class="row">
-        <div ng-class="{'col-sm-12': $ctrl.fullscreen, 'col-sm-4': !$ctrl.fullscreen}">
+        <div>
             <app-loader ng-if="$ctrl.loading"></app-loader>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <app-icon-toggle model="$ctrl.fullscreen" class-true="resize-small" class-false="resize-full" classes="pull-right hidden-xs margin-left10"></app-icon-toggle>
-                    <app-icon name="plus" title="Add" classes="pull-right btn-success"></app-icon>
+                    <app-icon name="plus" title="Sort TODO" classes="pull-right"></app-icon>
                     <h3 class="panel-title">{{$ctrl.title}} listing</h3>
                 </div>
-                <ul class="list-group" ng-if="!$ctrl.loading">
-                    <li class="list-group-item" ng-repeat="item in $ctrl.data" ng-class="{'active': item.id === $ctrl.current}" ng-click="$ctrl.setCurrent(item)">
-                        {{item.name}}
-                        <!--<span class="glyphicon pull-right" ng-class="{'glyphicon-refresh spinning': item.loading, 'glyphicon-trash': !item.loading}" aria-hidden="true" ng-click="$ctrl.remove(item)"></span>-->
-                        <app-icon-toggle model="item.loading" class-true="refresh spinning" class-false="trash" classes="pull-right" ng-click="$ctrl.forRemove = item.id;$event.stopPropagation()"></app-icon-toggle>
-                        <app-icon name="edit" classes="pull-right margin-right10" ng-click="$ctrl.edit(item, $event)"></app-icon>
-                        <app-icon name="eye-open" classes="pull-right margin-right10" ng-click="$ctrl.view(item, $event)"></app-icon>
-                    </li>
-                </ul>
+                <table class="table" ng-if="!$ctrl.loading">
+                    <tbody>
+                        <tr ng-repeat="item in $ctrl.data" ng-class="{'info': item.id === $ctrl.current}" ng-click="$ctrl.setCurrent(item)">
+                            <td>{{item.name}}</td>
+                            <td>
+                                <app-icon-toggle model="item.loading" class-true="refresh spinning" class-false="trash" classes="pull-right" ng-click="$ctrl.forRemove = item.id;$event.stopPropagation()"></app-icon-toggle>
+                                <app-icon name="edit" classes="pull-right margin-right10" ng-click="$ctrl.edit(item, $event)"></app-icon>
+                                <app-icon name="eye-open" classes="pull-right margin-right10" ng-click="$ctrl.view(item, $event)"></app-icon>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-
-        </div>
-        <div ng-class="{'hidden visible-xs-block col-xs-12': $ctrl.fullscreen, 'col-sm-8': !$ctrl.fullscreen}">
-            <items-item id="{{$ctrl.current}}"></items-item>
         </div>
     </div>
 </div>
