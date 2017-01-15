@@ -1,6 +1,7 @@
 import {headerComponent} from './header';
 import {footerComponent} from './footer';
 import {loaderComponent} from './loader';
+import {errorComponent} from './messages';
 import {iconComponent, iconToggleComponent} from './icons';
 import {modalComponent, ModalPopup} from './modal';
 
@@ -11,6 +12,8 @@ export default function (app){
     app.component(`appFooter`, footerComponent());
 
     app.component(`appLoader`, loaderComponent());
+
+    app.component(`appError`, errorComponent());
 
     app.component(`appIcon`, iconComponent());
     app.component(`appIconToggle`, iconToggleComponent());

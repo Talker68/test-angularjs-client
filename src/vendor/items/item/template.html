@@ -1,9 +1,18 @@
-<app-loader ng-if="$ctrl.loading"></app-loader>
-<div class="panel panel-default" ng-if="!$ctrl.loading">
-    <div class="panel-heading">
-        <h3 class="panel-title">Test item</h3>
+<div class="{{$ctrl.classes}}">
+    <app-loader ng-if="$ctrl.loading"></app-loader>
+    <div ng-if="$ctrl.error">
+        <div class="row">
+            <div class="col-xs-12"><app-error>{{$ctrl.error}}</app-error></div>
+        </div>
     </div>
-    <div class="panel-body">
-        Test item content {{$ctrl.id}}
+    <div class="panel panel-default" ng-if="!$ctrl.loading">
+        <div class="panel-heading">
+            <app-icon ng-if="$ctrl.backUrl" name="backward" title="Back" classes="pull-right margin-left10 btn-info" ng-click="$ctrl.back($ctrl.backUrl, $event)"></app-icon>
+            <app-icon name="edit" title="Edit" classes="pull-right" ng-click="$ctrl.edit($event)"></app-icon>
+            <h3 class="panel-title">{{$ctrl.data.name}}</h3>
+        </div>
+        <div class="panel-body">
+            {{$ctrl.data.name}}
+        </div>
     </div>
 </div>

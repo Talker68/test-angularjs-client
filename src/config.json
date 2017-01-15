@@ -7,8 +7,8 @@
       "link": "items"
     },
     {
-      "title": "Books",
-      "link": "books"
+      "title": "Items2",
+      "link": "items2"
     }
   ],
   "defaultMenuItem": "items"

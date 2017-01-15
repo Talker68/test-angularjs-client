@@ -5,6 +5,13 @@ let data = [
 
 class ServiceParent {
 
+    emulateOfFind(id){
+        let d = new this.$q.defer();
+        let item = data.filter(item => item.id==id);
+        d.resolve(item[0] || null);
+        return d.promise;
+    }
+
     emulateOfFindAll(){
         let d = new this.$q.defer();
         d.resolve(data);
@@ -16,6 +23,17 @@ class ServiceParent {
         data = data.filter(item => item.id!=id);
         d.resolve(data);
         return d.promise;
+    }
+
+    async find(id){
+        try{
+            let data = await this.emulateOfFind(id);
+            return data;
+        }catch(e){
+            return {
+                message: e.data.message
+            }
+        }
     }
 
     async findAll(){

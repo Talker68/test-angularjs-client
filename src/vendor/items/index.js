@@ -18,7 +18,7 @@ export default function (app){
         $routeProvider.when(`/${ModuleName}`, {
             template: `<${ModuleName}-listing></${ModuleName}-listing>`
         }).when(`/${ModuleName}/:id`, {
-            template: params => `<${ModuleName}-item id="${params.id}"></${ModuleName}-item>`
+            template: params => `<${ModuleName}-item id="${params.id}" classes="container" back-url="/${ModuleName}"></${ModuleName}-item>`
         }).when(`/${ModuleName}/add`, {
             template: `<${ModuleName}-add></${ModuleName}-add>`
         }).when(`/${ModuleName}/edit/:id`, {
