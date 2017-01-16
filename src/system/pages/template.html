@@ -1,0 +1,15 @@
+<nav aria-label="Page navigation" ng-if="$ctrl.size > 1">
+    <ul class="pagination pagination-sm">
+        <li ng-class="{'disabled': $ctrl.current == 1}">
+            <a href="#" aria-label="Previous" ng-click="$ctrl.current = $ctrl.current > 1 ? $ctrl.current - 1 : 1">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li ng-repeat="item in $ctrl.pages" ng-class="{'active': item == $ctrl.current}"><a href="#" ng-click="$ctrl.current = item">{{item}}</a></li>
+        <li ng-class="{'disabled': $ctrl.current == $ctrl.size}">
+            <a href="#" ng-click="$ctrl.current = $ctrl.current < $ctrl.size ? $ctrl.current + 1 : $ctrl.size" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>

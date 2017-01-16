@@ -23,24 +23,7 @@
                     </tbody>
                 </table>
             </div>
-            <pagination size="$ctrl.pagesCount" current="$ctrl.page.current"></pagination>
-
-            <nav aria-label="Page navigation" ng-if="$ctrl.pagesCount > 1">
-                <ul class="pagination pagination-sm">
-                    <li ng-class="{'disabled': $ctrl.page.current == 1}">
-                        <a href="#" aria-label="Previous" ng-click="$ctrl.setCurrentPage($ctrl.page.current - 1)">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li ng-repeat="item in $ctrl.tempPagesArray" ng-class="{'active': item == $ctrl.page.current}"><a href="#" ng-click="$ctrl.setCurrentPage(item)">{{item}}</a></li>
-                    <li ng-class="{'disabled': $ctrl.page.current == $ctrl.pagesCount}">
-                        <a href="#" ng-click="$ctrl.setCurrentPage($ctrl.page.current + 1)" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-
+            <app-pages size="$ctrl.pagesCount" current="$ctrl.pageCurrent"></app-pages>
         </div>
     </div>
 </div>

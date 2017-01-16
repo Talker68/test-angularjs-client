@@ -15,7 +15,7 @@ export class DashboardComponentController extends Controller{
         this.fullscreen = false;
         // for listing
         this.page = {
-            size: 10, // items on a page
+            size: 5, // items on a page
             current: 1 // active page
         };
         this.current = 2; // selected item

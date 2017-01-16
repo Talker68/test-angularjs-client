@@ -1,31 +1,44 @@
 import {Controller} from '../dashboard';
 import './styles.less';
 
+let $pageCurrent = 0;
+let $forRemove = 0;
+
 export class ListingController extends Controller {
 
+    set pageCurrent(value){
+        $pageCurrent && $pageCurrent != value && this.loadAll($pageCurrent = value) || ($pageCurrent = value);
+    }
+
+    get pageCurrent(){
+        return $pageCurrent;
+    }
+
     get forRemove() {
-        return this.$value;
+        return $forRemove;
     }
 
     set forRemove(value) {
-        this.$value = value;
-        this.remove(this.$value);
+        $forRemove = value;
+        this.remove(value);
     }
-
-    async restoreState() {
-        this.page = this.page || {
-                size: 10,
-                current: 1
-            };
+    //
+    async loadAll(page) {
+        this.loading = true;
         try {
-            let loaded = await this.loadAll();
-            this.forRemove = this.forRemove;
-        } catch (e) {
-
-        } finally {
+            let response = await this.service.findAll(this.pageSize, page);
+            this.data = response.data;
+            this.pagesCount = Math.ceil(response.count/this.pageSize);
+            this.current = this.current || this.data[0]._id;
+        } catch (error) {
+            this.error = error;
+        } finally{
+            this.loading = false;
             this.$scope.$digest();
         }
     }
+    // TODO create sortings
+    // TODO create show only fields from scope
 
     view(item, event) {
         event.stopPropagation();
@@ -46,9 +59,9 @@ export class ListingController extends Controller {
                 let item = items[0];
                 item.loading = true;
                 try {
-                    if (await this.ModalPopup.confirm("Confirm", `Do you ensure to remove that item: ${this.currentItem[this.removeFieldName]}?`) === 'Yes') {
+                    if (await this.ModalPopup.confirm("Confirm", `Do you ensure to remove that item: ${item[this.removeFieldName]}?`) === 'Yes') {
                         let result = await this.service.remove(item._id);
-                        this.loadAll();
+                        this.loadAll(this.pageCurrent);
                     }
                 } catch (e) {
                     console.log('error', e)
@@ -78,8 +91,21 @@ export class ListingController extends Controller {
 
     setCurrentPage(num){
         if(num < 1 || num > this.pagesCount) return;
-        this.page.current = num;
-        this.loadAll();
+        this.pageCurrent = num;
+        this.loadAll(this.pageCurrent);
+    }
+
+    async restoreState() {
+        this.pageSize = this.page && this.page.size || 10;
+        this.pageCurrent =  this.page && this.page.current || 1;
+        try {
+            let loaded = await this.loadAll(this.pageCurrent);
+            this.forRemove = this.forRemove;
+        } catch (e) {
+
+        } finally {
+            this.$scope.$digest();
+        }
     }
 
     constructor($scope, $injector, name) {
