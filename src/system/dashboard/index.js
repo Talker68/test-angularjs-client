@@ -1,6 +1,6 @@
 import './styles.less';
 
-export class DashboardController {
+export class Controller {
 
     constructor($scope, $injector, name){
 

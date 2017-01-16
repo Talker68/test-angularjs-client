@@ -1,0 +1,30 @@
+.listing__item{
+  cursor: pointer;
+}
+
+.listing__spinning{
+  animation: listing__spin 1s infinite linear;
+  -webkit-animation: listing__spin2 1s infinite linear;
+}
+
+@keyframes listing__spin {
+  from { transform: scale(1) rotate(0deg); }
+  to { transform: scale(1) rotate(360deg); }
+}
+
+@-webkit-keyframes listing__spin2 {
+  from { -webkit-transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); }
+}
+
+.listing__panel{
+  margin-bottom: 0;
+}
+
+.listing__margin-left10{
+  margin-left: 10px;
+}
+
+.listing__margin-right10{
+  margin-right: 10px;
+}

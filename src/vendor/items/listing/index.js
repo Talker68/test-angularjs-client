@@ -1,18 +1,10 @@
+import {ListingController} from '../../../system/listing';
 import template from './template.html';
 import './styles.less';
 
-export class ListingComponentController {
+export class ListingComponentController extends ListingController{
 
-    restoreState(){
-        this.forRemove = this.forRemove;
-    }
-
-    setCurrentPage(num){
-        if(num < 1 || num > this.pagesCount) return;
-        this.page.current = num;
-        this.loadAll();
-    }
-
+    //TODO remove to parent listing
     async loadAll() {
         this.loading = true;
         try {
@@ -25,10 +17,7 @@ export class ListingComponentController {
             for(let i = 0; i < this.pagesCount; i++){
                 this.tempPagesArray.push(i+1);
             }
-
-
-            this.current = this.current || this.data[0].id;
-            this.restoreState();
+            this.current = this.current || this.data[0]._id;
         } catch (error) {
             this.error = error;
         } finally{
@@ -36,91 +25,12 @@ export class ListingComponentController {
             this.$scope.$digest();
         }
     }
-
-    get forRemove(){
-        return this.$value;
-    }
-
-    set forRemove(value){
-        this.$value = value;
-        if(this.$value && this.data && this.data.length){
-            let items = this.data.filter(v => {
-                return v.id == this.$value
-            });
-            if(items && items[0]){
-                let item = items[0];
-                item.loading = true;
-                this.remove(item.id).then(()=>{
-                    item.loading = false;
-                }).catch(()=>{
-                    item.loading = false;
-                });
-            }
-        }
-    }
-
-
-    async remove(id) {
-        try {
-            if (await this.ModalPopup.confirm("Confirm", `Do you ensure to remove that item: ${this.currentItem.name}?`) === 'Yes') {
-                let result = await this.service.remove(id);
-                this.loadAll();
-            }
-        } catch (e) {
-            console.log('error', e)
-        } finally{
-            this.$scope.$digest();
-        }
-    }
-
-    get currentItem(){
-        let item = {};
-        if(this.data.length){
-            let i = this.data.filter(v => v.id == this.current);
-            if(i.length){
-                item = i[0];
-            }
-        }
-        return item;
-    }
-
-    edit(item, event){
-        event.stopPropagation();
-        this.$location.path(`/${this.moduleName}/edit/${item.id}`)
-    }
-
-    view(item, event){
-        event.stopPropagation();
-        this.$location.path(`/${this.moduleName}/${item.id}`)
-    }
+    // TODO create sortings
+    // TODO create show only fields from scope
 
     constructor($scope, $injector, name) {
-
-        this.moduleName = name;
-        this.$scope = $scope;
-        this.$injector = $injector;
-        this.$location = $injector.get('$location');
-        this.ModalPopup = this.$injector.get('ModalPopup');
-
-        name = name[0].toUpperCase() + name.slice(1);
-        this.service = this.$injector.get(`${name}Service`);
-
-        this.title = name;
-        this.data = [];
-        this.error = '';
-
-    }
-
-    $onInit(){
-        this.page = this.page || {
-                size: 10,
-                current: 1
-            };
-        this.loadAll();
-    }
-
-    setCurrent(item) {
-        this.current = item.id;
+        super($scope, $injector, name);
+        this.removeFieldName = 'name';
     }
 
 }
@@ -131,7 +41,8 @@ export function listingComponent(name) {
         bindings: {
             current: '=?',
             forRemove: '<?',
-            page: '=?'
+            page: '=?',
+            sort: '=?'
         },
 
         controller: ($scope, $injector) => {

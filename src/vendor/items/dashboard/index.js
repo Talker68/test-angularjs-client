@@ -1,8 +1,8 @@
-import {DashboardController} from '../../../system/dashboard';
+import {Controller} from '../../../system/dashboard';
 import template from './template.html';
 import './styles.less';
 
-export class DashboardComponentController extends DashboardController{
+export class DashboardComponentController extends Controller{
 
     add($event){
         $event.stopPropagation();
