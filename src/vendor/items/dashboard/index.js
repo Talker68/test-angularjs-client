@@ -1,23 +1,39 @@
+import {DashboardController} from '../../../system/dashboard';
 import template from './template.html';
 import './styles.less';
 
-export class DashboardComponentController {
+export class DashboardComponentController extends DashboardController{
+
+    add($event){
+        $event.stopPropagation();
+        this.$location.path(`/${this.moduleName}/add`);
+    }
+
+    restoreState(){
+        super.restoreState();
+        // TODO get from storage
+        this.fullscreen = false;
+        // for listing
+        this.page = {
+            size: 10, // items on a page
+            current: 1 // active page
+        };
+        this.current = 2; // selected item
+        this.fields = ['name']; // fields to show
+        this.sort = { // fields to sort
+            name: 'desc'
+        };
+    }
 
 
     constructor($scope, $injector, name) {
 
-        this.moduleName = name;
-        this.$scope = $scope;
-        this.$injector = $injector;
-
-        // state
-        this.fullscreen = false; // fullscreen mode
-        this.current = 2;
-        this.sort = {
-            name: 'desc' //TODO can be null/'asc'/'desc'
-        }
+        super($scope, $injector, name);
+        this.$location = $injector.get('$location');
 
     }
+
+
 }
 
 export function dashboardComponent(name) {

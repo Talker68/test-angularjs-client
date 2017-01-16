@@ -1,8 +1,8 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <app-icon-toggle model="$ctrl.fullscreen" class-true="resize-small" class-false="resize-full" classes="pull-right hidden-xs dashboard-btn"></app-icon-toggle>
-            <app-icon name="plus" title="Add" classes="pull-right btn-success dashboard-btn"></app-icon>
+            <app-icon-toggle model="$ctrl.fullscreen" class-true="resize-small" class-false="resize-full" classes="pull-right hidden-xs dashboard__title-btn"></app-icon-toggle>
+            <app-icon name="plus" title="Add" ng-click="$ctrl.add($event)" classes="pull-right btn-success dashboard__title-btn"></app-icon>
             <ol class="breadcrumb">
                 <li class="active"><h3>{{$ctrl.moduleName}} dashboard</h3></li>
             </ol>
@@ -10,10 +10,10 @@
     </div>
     <div class="row">
         <div ng-class="{'col-sm-12': $ctrl.fullscreen, 'col-sm-4': !$ctrl.fullscreen}">
-            <items-listing sort="{name: 'desc'}" current="$ctrl.current"></items-listing>
+            <items-listing current="$ctrl.current" page="$ctrl.page" fields="$ctrl.fields" sort="$ctrl.sort"></items-listing>
         </div>
         <div ng-class="{'hidden visible-xs-block col-xs-12': $ctrl.fullscreen, 'col-sm-8': !$ctrl.fullscreen}">
-            <items-listing current="$ctrl.current"></items-listing>
+            the place for a card
         </div>
     </div>
 </div>

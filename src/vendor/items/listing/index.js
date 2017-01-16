@@ -7,10 +7,26 @@ export class ListingComponentController {
         this.forRemove = this.forRemove;
     }
 
+    setCurrentPage(num){
+        if(num < 1 || num > this.pagesCount) return;
+        this.page.current = num;
+        this.loadAll();
+    }
+
     async loadAll() {
         this.loading = true;
         try {
-            this.data = await this.service.findAll();
+            let response = await this.service.findAll(this.page.size, this.page.current);
+            this.data = response.data;
+            this.pagesCount = Math.ceil(response.count/this.page.size);
+
+            //TODO remove when pagination construction
+            this.tempPagesArray = [];
+            for(let i = 0; i < this.pagesCount; i++){
+                this.tempPagesArray.push(i+1);
+            }
+
+
             this.current = this.current || this.data[0].id;
             this.restoreState();
         } catch (error) {
@@ -93,10 +109,14 @@ export class ListingComponentController {
         this.data = [];
         this.error = '';
 
+    }
+
+    $onInit(){
+        this.page = this.page || {
+                size: 10,
+                current: 1
+            };
         this.loadAll();
-
-        this.fullscreen = false; // fullscreen mode
-
     }
 
     setCurrent(item) {
@@ -109,7 +129,9 @@ export function listingComponent(name) {
     return {
 
         bindings: {
-            current: '=?'
+            current: '=?',
+            forRemove: '<?',
+            page: '=?'
         },
 
         controller: ($scope, $injector) => {

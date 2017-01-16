@@ -25,7 +25,7 @@ class ServiceParent {
         return d.promise;
     }
 
-    async find(id){
+    async find(id, pageSize, currentPage){
         try{
             let data = await this.emulateOfFind(id);
             return data;
@@ -36,10 +36,13 @@ class ServiceParent {
         }
     }
 
-    async findAll(){
+    async findAll(pageSize = 10000, currentPage = 1){
         try{
             let data = await this.emulateOfFindAll();
-            return data;
+            return {
+                data: data.slice(pageSize*(currentPage - 1), pageSize*currentPage),
+                count: data.length
+            };
         }catch(e){
             return {
                 message: e.data.message
